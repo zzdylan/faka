@@ -1,0 +1,47 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateOrdersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('orders', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('trade_no')->comment('订单号');
+            $table->string('name')->comment('订单名称');
+            $table->integer('goods_id')->comment('商品id');
+            $table->string('goods_name')->comment('商品名称');
+            $table->decimal('unit_price')->comment('商品单价');
+            $table->integer('count')->comment('购买数量');
+            $table->decimal('total_price')->comment('订单总价');
+            $table->string('pay_account')->nullable()->comment('充值账号');
+            $table->string('email')->nullable()->comment('邮箱');
+            $table->tinyInteger('type')->comment('订单类型   1手工订单 2自动发卡');
+            $table->string('out_trade_no')->nullable()->comment('外部订单号');
+            $table->tinyInteger('pay_type')->comment('支付方式');
+            $table->string('password')->nullable()->comment('查询密码');
+            $table->string('more_input_value')->nullable()->comment('更多表单值');
+            $table->tinyInteger('status')->default(0)->comment('0未支付 1已支付 2已过期');
+            $table->timestamp('pay_time')->nullable()->comment('支付时间');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('orders');
+    }
+}
