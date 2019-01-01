@@ -29,7 +29,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('pay_type')->comment('支付方式');
             $table->string('password')->nullable()->comment('查询密码');
             $table->string('more_input_value')->nullable()->comment('更多表单值');
-            $table->tinyInteger('status')->default(0)->comment('0未支付 1已支付 2已过期');
+            $table->tinyInteger('status')->default(0)->comment('0未支付 1已支付,正在处理中 2已过期 3处理成功 4处理失败');
             $table->timestamp('pay_time')->nullable()->comment('支付时间');
             $table->timestamps();
         });

@@ -88,6 +88,14 @@ class CardController extends Controller
         $grid->id('ID');
         $grid->goods()->name('所属商品');
         $grid->content('卡密');
+        $grid->status('状态')->display(function ($status) {
+            switch ($status){
+                case 0:
+                    return '正常';
+                case 1:
+                    return '已售出';
+            }
+        });;
         $grid->created_at('创建时间');
 
         return $grid;
