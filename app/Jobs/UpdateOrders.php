@@ -63,7 +63,7 @@ class UpdateOrders implements ShouldQueue
                     }
                     event(new OrderShipped($this->order));
                     $this->order->status = 3;
-                    $this->save();
+                    $this->order->save();
                 });
             }
         } else {//未支付

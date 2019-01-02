@@ -378,7 +378,7 @@
             timeout: 10000, //ajax请求超时时间10s
             success: function (data, textStatus) {
                 //从服务器得到数据，显示数据并继续查询
-                if (data.status == 1) {
+                if (data.status == 1 || data.status == 3) {
                     alert('支付成功，点击跳转中...');
                     window.location.href = '/';
                 } else {
