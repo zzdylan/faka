@@ -83,7 +83,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-block">
-                <input type="text" name="email" placeholder="请仔细输入正确邮箱，接收卡密使用" required lay-verify="required"
+                <input type="text" name="email" placeholder="请仔细输入正确邮箱，接收卡密使用" required lay-verify="required|email"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -161,6 +161,30 @@
                     }
                 });
             }
+
+            var notice = function(){
+                //示范一个公告层
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: false
+                    ,area: '300px;'
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    ,btn: ['火速围观', '残忍拒绝']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content: '<div style="text-align:center;padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">去github给个star呗</div>'
+                    ,success: function(layero){
+                        var btn = layero.find('.layui-layer-btn');
+                        btn.find('.layui-layer-btn0').attr({
+                            href: 'https://github.com/zzDylan/faka'
+                            ,target: '_blank'
+                        });
+                    }
+                });
+            }
+            notice();
         });
     </script>
 @endsection

@@ -102,6 +102,7 @@ class OrderController extends Controller
         $grid->count('购买数量');
         $grid->total_price('订单总价');
         $grid->pay_account('充值账号');
+        $grid->email('邮件');
         $grid->type('订单类型')->display(function ($type) {
             switch ($this->type) {
                 case 1:
