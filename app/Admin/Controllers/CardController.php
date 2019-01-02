@@ -95,9 +95,9 @@ class CardController extends Controller
         $grid->status('状态')->display(function ($status) {
             switch ($status){
                 case 0:
-                    return '正常';
+                    return '<span class="label label-primary">正常</span>';
                 case 1:
-                    return '已售出';
+                    return '<span class="label label-info">已售出</span>';
             }
         });;
         $grid->created_at('创建时间');
