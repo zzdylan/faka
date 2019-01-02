@@ -104,20 +104,20 @@ class OrderController extends Controller
         $grid->pay_account('充值账号');
         $grid->email('邮件');
         $grid->type('订单类型')->display(function ($type) {
-            switch ($this->type) {
+            switch ($type){
                 case 1:
-                    return '手动发卡';
+                    return '<span class="label label-primary">手动发卡</span>';
                 case 2:
-                    return '自动发卡';
+                    return '<span class="label label-success">自动发卡</span>';
             }
         });
         $grid->out_trade_no('第三方支付号');
         $grid->pay_type('支付方式')->display(function ($payType) {
             switch ($payType) {
                 case 1:
-                    return '微信支付';
+                    return '<span class="label label-success">微信支付</span>';
                 case 2:
-                    return '支付宝支付';
+                    return '<span class="label label-info">支付宝支付</span>';
                 default:
                     return '';
             }
@@ -126,15 +126,15 @@ class OrderController extends Controller
         $grid->status('订单状态')->display(function ($status) {
             switch ($status) {
                 case 0:
-                    return '未支付';
+                    return '<span class="label label-default">未支付</span>';
                 case 1:
-                    return '已支付';
+                    return '<span class="label label-primary">已支付</span>';
                 case 2:
-                    return '过期';
+                    return '<span class="label label-warning">过期</span>';
                 case 3:
-                    return '处理成功';
+                    return '<span class="label label-success">处理成功</span>';
                 case 4:
-                    return '处理失败';
+                    return '<span class="label label-danger">处理失败</span>';
             }
         });
         $grid->created_at('创建时间');

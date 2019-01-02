@@ -89,9 +89,9 @@ class GoodsController extends Controller
         $grid->type('商品类型')->display(function ($type) {
             switch ($this->type){
                 case 1:
-                    return '手动发卡';
+                    return '<span class="label label-primary">手动发卡</span>';
                 case 2:
-                    return '自动发卡';
+                    return '<span class="label label-success">自动发卡</span>';
             }
         });
         $grid->sold_count('商品销量');
@@ -99,7 +99,7 @@ class GoodsController extends Controller
             return $this->goodsStock();
         });
         $grid->status('上架状态')->display(function ($status) {
-            return $status ? '是' : '否';
+            return $status ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>';
         });
         $grid->created_at('Created at');
         $grid->updated_at('Updated at');
