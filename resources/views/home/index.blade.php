@@ -90,7 +90,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">查询密码</label>
             <div class="layui-input-block">
-                <input type="text" name="password" placeholder="请仔细输入正确邮箱，接收卡密使用" required lay-verify="required"
+                <input type="text" name="password" placeholder="请仔细查询密码，作为查询重要依据" required lay-verify="required"
                        autocomplete="off" class="layui-input">
             </div>
         </div>

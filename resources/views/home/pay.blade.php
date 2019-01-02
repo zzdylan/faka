@@ -335,7 +335,7 @@
     <div class="mod-ct">
         <div class="order">
         </div>
-        <div class="amount">￥0.01</div>
+        <div class="amount">￥{{$order->total_price}}</div>
         <div class="qr-image" id="" title="">
             <canvas width="230" height="230" style="display: none;"></canvas>
             <img src="{{$result['qr_code']}}" title="请使用微信或者支付宝“扫一扫”" style=""></div>

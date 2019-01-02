@@ -17,5 +17,6 @@ Route::group([
     $router->resource('goods/categories', 'CategoryController');
     $router->resource('goods', 'GoodsController');
     $router->resource('cards', 'CardController');
+    $router->post('orders/status','OrderController@status');
     $router->resource('orders', 'OrderController');
 });

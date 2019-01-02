@@ -149,9 +149,7 @@ class GoodsController extends Controller
         ]);
         $form->currency('price','商品价格')->symbol('￥')->options(['digits' => 2]);
         $form->editor('introduce','商品介绍');
-        $form->text('first_input','第一个输入框标题')->help('如商品是自动发卡请勿填写!')->rules('required',[
-            'required' => '请输入输入框标题',
-        ]);
+        $form->text('first_input','第一个输入框标题')->help('如商品是自动发卡请勿填写!');
         $form->text('more_input','更多输入框')->help('例如 密码,大区 以英文逗号分割;如商品是自动发卡请勿填写!');
         $form->number('stock','商品库存')->min(0)->help('如商品是自动发卡请勿填写，导入卡密时会自动识别');
         $form->select('type','商品类型')->options([1=>'手工商品',2=>'自动发卡'])->default(1);

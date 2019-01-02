@@ -20,7 +20,7 @@ class Goods extends Model
             case 1:
                 return $this->stock;
             case 2:
-                return $this->cards()->count();
+                return $this->cards()->where('status',0)->count();
         }
     }
 

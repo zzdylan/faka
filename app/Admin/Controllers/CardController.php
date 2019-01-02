@@ -84,7 +84,11 @@ class CardController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Card);
-
+        $grid->actions(function ($actions) {
+            //$actions->disableDelete();
+            $actions->disableEdit();
+            $actions->disableView();
+        });
         $grid->id('ID');
         $grid->goods()->name('所属商品');
         $grid->content('卡密');

@@ -119,7 +119,7 @@ class CategoryController extends Controller
     protected function form()
     {
         $form = new Form(new Category);
-        $form->text('sort','排序')->rules('required|numeric',[
+        $form->text('sort','排序')->default(0)->rules('required|numeric',[
             'required' => '请输入排序',
             'numeric'   => '排序只能为数字',
         ]);

@@ -18,6 +18,7 @@ class CreateCardsTable extends Migration
             $table->integer('goods_id')->comment('所属商品id');
             $table->string('content')->comment('内容');
             $table->tinyInteger('status')->default(0)->comment('0正常 1已售出');
+            $table->integer('order_id')->nullable()->comment('所属订单id');
             $table->timestamps();
         });
     }

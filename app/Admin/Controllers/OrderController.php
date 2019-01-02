@@ -9,6 +9,8 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use App\Admin\Extensions\Tools\HandleOrders;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -80,7 +82,18 @@ class OrderController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Order);
-
+        $grid->tools(function ($tools) {
+            $tools->batch(function ($batch) {
+                $batch->add('处理成功', new HandleOrders(3));
+                $batch->add('处理失败', new HandleOrders(4));
+            });
+        });
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+            //$actions->disableEdit();
+            $actions->disableView();
+        });
+        $grid->model()->orderBy('id', 'desc');
         $grid->id('订单id');
         $grid->trade_no('订单号');
         $grid->name('订单名称');
@@ -90,7 +103,7 @@ class OrderController extends Controller
         $grid->total_price('订单总价');
         $grid->pay_account('充值账号');
         $grid->type('订单类型')->display(function ($type) {
-            switch ($this->type){
+            switch ($this->type) {
                 case 1:
                     return '手动发卡';
                 case 2:
@@ -99,22 +112,28 @@ class OrderController extends Controller
         });
         $grid->out_trade_no('第三方支付号');
         $grid->pay_type('支付方式')->display(function ($payType) {
-            switch ($payType){
+            switch ($payType) {
                 case 1:
                     return '微信支付';
                 case 2:
                     return '支付宝支付';
+                default:
+                    return '';
             }
         });
         $grid->password('查询密码');
         $grid->status('订单状态')->display(function ($status) {
-            switch ($status){
+            switch ($status) {
                 case 0:
                     return '未支付';
                 case 1:
                     return '已支付';
                 case 2:
                     return '过期';
+                case 3:
+                    return '处理成功';
+                case 4:
+                    return '处理失败';
             }
         });
         $grid->created_at('创建时间');
@@ -155,4 +174,13 @@ class OrderController extends Controller
 
         return $form;
     }
+
+    public function status(Request $request)
+    {
+        $ids = $request->ids;
+        $action = $request->action;
+        Order::whereIn('id', $ids)->update(['status' => $action]);
+        return ['code' => 1];
+    }
+
 }

@@ -39,7 +39,8 @@ class OrderController extends BaseController
             $order->pay_account = '';
             $order->type = $goods->type;
             $order->pay_type = 1;
-            $order->password = '';
+            $order->password = $request->password;
+            $order->email = $request->email;
             $order->more_input_value = $request->more_input_value;
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {

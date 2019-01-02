@@ -9,4 +9,16 @@ class Order extends Model
     protected $casts = [
         'more_input_value' => 'array',
     ];
+
+    public function cards(){
+        return $this->hasMany(Card::class,'order_id');
+    }
+
+    public function consumeCards(){
+        return (new Card())->newQuery()
+            ->where('status', 0)
+            ->limit($this->count)
+            ->update(['status'=>1,'order_id'=>$this->id]);
+    }
+
 }

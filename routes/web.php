@@ -20,9 +20,5 @@ Route::group(['prefix'=>'wechat_menus'],function(){
 Route::get('/','IndexController@index');
 Route::get('/orders/{id}/pay','OrderController@pay');
 Route::get('test',function(){
-    $result = app('youzan')->post('youzan.trades.qr.get', [
-        'qr_id' => 10634139,
-        'status' => 'TRADE_RECEIVED'
-    ]);
-    dd($result);
+
 });
