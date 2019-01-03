@@ -74,7 +74,7 @@ class UpdateOrders implements ShouldQueue
                     //释放库存
                     $goods->addStock($this->order->count);
                 }
-                $this->order->status = 3;
+                $this->order->status = 2;
                 $this->order->save();
                 return;
             } else {

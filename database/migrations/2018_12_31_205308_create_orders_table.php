@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('email')->nullable()->comment('邮箱');
             $table->tinyInteger('type')->comment('订单类型   1手工订单 2自动发卡');
             $table->string('out_trade_no')->nullable()->comment('外部订单号');
-            $table->tinyInteger('pay_type')->comment('支付方式');
+            $table->tinyInteger('pay_type')->nullable()->comment('支付方式');
             $table->string('password')->nullable()->comment('查询密码');
             $table->string('more_input_value')->nullable()->comment('更多表单值');
             $table->tinyInteger('status')->default(0)->comment('0未支付 1已支付,正在处理中 2已过期 3处理成功 4处理失败');
