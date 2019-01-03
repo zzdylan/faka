@@ -77,6 +77,10 @@ class OrderController extends BaseController
         return view('home.pay', compact('order', 'result'));
     }
 
+    public function show(Order $order){
+        return $order;
+    }
+
     public function data(Order $order, Request $request)
     {
         if ($order->type == 2) {
