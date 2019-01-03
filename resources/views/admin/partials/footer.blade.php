@@ -14,5 +14,5 @@
 
     </div>
     <!-- Default to the left -->
-    <strong>Powered by <a href="#">dylan</a></strong>
+    <strong>Powered by <a target="_blank" href="https://github.com/zzDylan/faka">dylan</a></strong>
 </footer>

@@ -31,7 +31,7 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © <strong>Powered by <a target="_blank" href="https://github.com/zzDylan/faka">dylan</a></strong>
     </div>
 </div>
 <script src="{{asset('layui/layui.js')}}"></script>
