@@ -116,9 +116,15 @@
         table.on('tool(ordersList)', function(obj){
             var layEvent = obj.event,
                 data = obj.data;
-            console.log(data);
             if(layEvent === 'look'){ //查看
-                if(data.type == 2){
+                if(data.type == 1){
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['420px', '240px'], //宽高
+                        content: data.pay_account
+                    });
+                }else if(data.type == 2){
                     layer.prompt({title: '输入密码', formType: 1}, function(pass, index){
                         layer.close(index);
                         $.post('/api/orders/data/'+data.id,{password:pass},function(res){
