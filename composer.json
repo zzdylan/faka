@@ -20,7 +20,8 @@
         "mockery/mockery": "~1.0",
         "overtrue/laravel-query-logger": "^1.0",
         "phpunit/phpunit": "~6.0",
-        "symfony/thanks": "^1.0"
+        "symfony/thanks": "^1.0",
+        "orangehill/iseed": "dev-master"
     },
     "autoload": {
         "classmap": [
