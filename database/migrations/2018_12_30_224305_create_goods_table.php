@@ -17,7 +17,7 @@ class CreateGoodsTable extends Migration
             $table->increments('id');
             $table->integer('category_id')->comment('商品分类id');
             $table->string('name')->comment('商品名称');
-            $table->text('introduce')->nullable()->comment('商品介绍');
+            $table->longText('introduce')->nullable()->comment('商品介绍');
             $table->decimal('price')->comment('商品价格');
             $table->tinyInteger('type')->comment('商品类型   1手工商品 2自动发卡');
             $table->unsignedInteger('sold_count')->default(0)->comment('销量');
