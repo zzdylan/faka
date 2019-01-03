@@ -24,7 +24,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedInteger('stock')->default(0)->comment('库存');
             $table->tinyInteger('status')->default(1)->comment('商品上架状态 0下架  1上架');
             $table->integer('sort')->comment('商品排序');
-            $table->string('first_input')->comment('第一个输入框标题');
+            $table->string('first_input')->nullable()->comment('第一个输入框标题');
             $table->string('more_input')->nullable()->comment('更多输入框 逗号隔开');
             $table->timestamps();
         });

@@ -52,7 +52,7 @@ return [
 
         'namespace' => 'App\\Admin\\Controllers',
 
-        'middleware' => ['web', 'admin','multi-session:path,/admin'],
+        'middleware' => ['web', 'admin'],
     ],
 
     /*

@@ -8,8 +8,6 @@
         "php": ">=7.0.0",
         "encore/laravel-admin": "^1.6",
         "fideloper/proxy": "~3.3",
-        "laravel-admin-ext/helpers": "^1.1",
-        "laravel-admin-ext/multitenancy": "^2.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "overtrue/laravel-wechat": "~4.0",
