@@ -36,9 +36,7 @@ class OrderController extends BaseController
             $order->unit_price = $goods->price;
             $order->count = $request->count;
             $order->total_price = $goods->price * $request->count;
-            $order->pay_account = '';
             $order->type = $goods->type;
-            $order->pay_type = 1;
             $order->password = $request->password;
             $order->email = $request->email;
             $order->pay_account = $request->pay_account;
