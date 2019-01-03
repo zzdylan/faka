@@ -11,14 +11,15 @@
 |
 */
 
-Route::group(['prefix'=>'wechat_menus'],function(){
-    Route::view('/panel','wechatMenu');
-    Route::get('/','WechatMenuController@index');
-    Route::post('/','WechatMenuController@store');
-    Route::delete('/','WechatMenuController@destroy');
+Route::group(['prefix' => 'wechat_menus'], function () {
+    Route::view('/panel', 'wechatMenu');
+    Route::get('/', 'WechatMenuController@index');
+    Route::post('/', 'WechatMenuController@store');
+    Route::delete('/', 'WechatMenuController@destroy');
 });
-Route::get('/','IndexController@index');
-Route::get('/orders/{id}/pay','OrderController@pay');
-Route::get('test',function(){
-
+Route::get('/', 'IndexController@index');
+Route::get('/select_goods', 'IndexController@selectGoods');
+Route::get('/orders/{id}/pay', 'OrderController@pay');
+Route::get('test', function () {
+    return view('home.test');
 });

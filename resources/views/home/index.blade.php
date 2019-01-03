@@ -1,190 +1,136 @@
-@extends('home.layout')
-@section('content')
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-md6">
-            <div class="layui-card">
-                <div id="test"></div>
-                <div class="layui-card-header">购买商品</div>
-                <div class="layui-card-body">
-                    <form class="layui-form" action="{{url('')}}">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">商品分类</label>
-                            <div class="layui-input-block">
-                                <select name="category_id" lay-filter="categorySelect" lay-verify="required">
-                                    <option value="">请选择商品分类</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">商品列表</label>
-                            <div class="layui-input-block">
-                                <select lay-filter="goodsSelect" id="goods-view" name="goods_id" lay-verify="required">
-                                    <option value="">请选择商品</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">商品单价</label>
-                            <div class="layui-input-block">
-                                <input disabled="disabled" id="price" type="text" name="price" required
-                                       lay-verify="required" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">商品库存</label>
-                            <div class="layui-input-block">
-                                <input disabled="disabled" id="goods_stock" type="text" name="goods_stock" required
-                                       lay-verify="required" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">购买数量</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="count" required lay-verify="required" autocomplete="off"
-                                       class="layui-input" value="1">
-                            </div>
-                        </div>
-                        <div id="email-and-password">
-
-                        </div>
-                        <div id="more-input">
-
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button id="confirmPayBtn" class="layui-btn" lay-submit="" lay-filter="confirmPay">确认购买</button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>发卡系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="/layuicms/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/layuicms/css/index.css" media="all" />
+</head>
+<body class="main_body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 顶部 -->
+    <div class="layui-header header">
+        <div class="layui-main mag0">
+            <a href="#" class="logo">发卡系统</a>
+            <!-- 显示/隐藏菜单 -->
+            <a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
+            <!-- 顶级菜单 -->
+            {{--<ul class="layui-nav mobileTopLevelMenus" mobile>--}}
+                {{--<li class="layui-nav-item" data-menu="contentManagement">--}}
+                    {{--<a href="javascript:;"><i class="seraph icon-caidan"></i><cite>layuiCMS</cite></a>--}}
+                    {{--<dl class="layui-nav-child">--}}
+                        {{--<dd class="layui-this" data-menu="contentManagement"><a href="javascript:;"><i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a></dd>--}}
+                        {{--<dd data-menu="memberCenter"><a href="javascript:;"><i class="seraph icon-icon10" data-icon="icon-icon10"></i><cite>用户中心</cite></a></dd>--}}
+                        {{--<dd data-menu="systemeSttings"><a href="javascript:;"><i class="layui-icon" data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a></dd>--}}
+                        {{--<dd data-menu="seraphApi"><a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>使用文档</cite></a></dd>--}}
+                    {{--</dl>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
+            {{--<ul class="layui-nav topLevelMenus" pc>--}}
+                {{--<li class="layui-nav-item layui-this" data-menu="contentManagement">--}}
+                    {{--<a href="javascript:;"><i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a>--}}
+                {{--</li>--}}
+                {{--<li class="layui-nav-item" data-menu="memberCenter" pc>--}}
+                    {{--<a href="javascript:;"><i class="seraph icon-icon10" data-icon="icon-icon10"></i><cite>用户中心</cite></a>--}}
+                {{--</li>--}}
+                {{--<li class="layui-nav-item" data-menu="systemeSttings" pc>--}}
+                    {{--<a href="javascript:;"><i class="layui-icon" data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a>--}}
+                {{--</li>--}}
+                {{--<li class="layui-nav-item" data-menu="seraphApi" pc>--}}
+                    {{--<a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>使用文档</cite></a>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
+            <!-- 顶部右侧菜单 -->
+            {{--<ul class="layui-nav top_menu">--}}
+                {{--<li class="layui-nav-item" pc>--}}
+                    {{--<a href="javascript:;" class="clearCache"><i class="layui-icon" data-icon="&#xe640;">&#xe640;</i><cite>清除缓存</cite><span class="layui-badge-dot"></span></a>--}}
+                {{--</li>--}}
+                {{--<li class="layui-nav-item lockcms" pc>--}}
+                    {{--<a href="javascript:;"><i class="seraph icon-lock"></i><cite>锁屏</cite></a>--}}
+                {{--</li>--}}
+                {{--<li class="layui-nav-item" id="userInfo">--}}
+                    {{--<a href="javascript:;"><img src="/layuicms/images/face.jpg" class="layui-nav-img userAvatar" width="35" height="35"><cite class="adminName">驊驊龔頾</cite></a>--}}
+                    {{--<dl class="layui-nav-child">--}}
+                        {{--<dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="seraph icon-ziliao" data-icon="icon-ziliao"></i><cite>个人资料</cite></a></dd>--}}
+                        {{--<dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>--}}
+                        {{--<dd><a href="javascript:;" class="showNotice"><i class="layui-icon">&#xe645;</i><cite>系统公告</cite><span class="layui-badge-dot"></span></a></dd>--}}
+                        {{--<dd pc><a href="javascript:;" class="functionSetting"><i class="layui-icon">&#xe620;</i><cite>功能设定</cite><span class="layui-badge-dot"></span></a></dd>--}}
+                        {{--<dd pc><a href="javascript:;" class="changeSkin"><i class="layui-icon">&#xe61b;</i><cite>更换皮肤</cite></a></dd>--}}
+                        {{--<dd><a href="/layuicms/page/login/login.html" class="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>--}}
+                    {{--</dl>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
         </div>
-        <div class="layui-col-md6">
-            <div class="layui-card">
-                <div class="layui-card-header">商品详情</div>
-                <div id="goods-introduce" class="layui-card-body">
-
+    </div>
+    <!-- 左侧导航 -->
+    <div class="layui-side layui-bg-black">
+        {{--<div class="user-photo">--}}
+            {{--<a class="img" title="我的头像" ><img src="/layuicms/images/face.jpg" class="userAvatar"></a>--}}
+            {{--<p>你好！<span class="userName">驊驊龔頾</span>, 欢迎登录</p>--}}
+        {{--</div>--}}
+        {{--<!-- 搜索 -->--}}
+        {{--<div class="layui-form component">--}}
+            {{--<select name="search" id="search" lay-search lay-filter="searchPage">--}}
+                {{--<option value="">搜索页面或功能</option>--}}
+                {{--<option value="1">layer</option>--}}
+                {{--<option value="2">form</option>--}}
+            {{--</select>--}}
+            {{--<i class="layui-icon">&#xe615;</i>--}}
+        {{--</div>--}}
+        <div class="navBar layui-side-scroll" id="navBar">
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item layui-this">
+                    <a href="javascript:;" data-url="/select_goods"><i class="layui-icon" data-icon=""></i><cite>首页</cite></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 右侧内容 -->
+    <div class="layui-body layui-form">
+        <div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
+            <ul class="layui-tab-title top_tab" id="top_tabs">
+                <li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>首页</cite></li>
+            </ul>
+            {{--<ul class="layui-nav closeBox">--}}
+                {{--<li class="layui-nav-item">--}}
+                    {{--<a href="javascript:;"><i class="layui-icon caozuo">&#xe643;</i> 页面操作</a>--}}
+                    {{--<dl class="layui-nav-child">--}}
+                        {{--<dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>--}}
+                        {{--<dd><a href="javascript:;" class="closePageOther"><i class="seraph icon-prohibit"></i> 关闭其他</a></dd>--}}
+                        {{--<dd><a href="javascript:;" class="closePageAll"><i class="seraph icon-guanbi"></i> 关闭全部</a></dd>--}}
+                    {{--</dl>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
+            <div class="layui-tab-content clildFrame">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="/select_goods"></iframe>
                 </div>
             </div>
         </div>
     </div>
-    <script id="goods" type="text/html">
-        <option value="">请选择商品</option>
-        @{{#  layui.each(d, function(index, item){ }}
-        <option value="@{{item.id}}">@{{item.text}}</option>
-        @{{#  }); }}
-    </script>
+    <!-- 底部 -->
+    <div class="layui-footer footer">
+        <p>
+            <span>copyright @2018 dylan</span>　　
+            {{--<a onclick="donation()" class="layui-btn layui-btn-danger layui-btn-sm">捐赠作者</a>--}}
+        </p>
+    </div>
+</div>
 
-    <script id="email-and-password-tpl" type="text/html">
-        <div class="layui-form-item">
-            <label class="layui-form-label">邮箱</label>
-            <div class="layui-input-block">
-                <input type="text" name="email" placeholder="请仔细输入正确邮箱，接收卡密使用" required lay-verify="required|email"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">查询密码</label>
-            <div class="layui-input-block">
-                <input type="text" name="password" placeholder="请仔细查询密码，作为查询重要依据" required lay-verify="required"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-    </script>
+<!-- 移动导航 -->
+<div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
+<div class="site-mobile-shade"></div>
 
-    <script id="more-input-tpl" type="text/html">
-        @{{#  layui.each(d, function(index, item){ }}
-        <div class="layui-form-item">
-            <label class="layui-form-label">@{{ item }}</label>
-            <div class="layui-input-block">
-                <input type="text" name="more_input_value[]" placeholder="请输入@{{ item }}"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        @{{#  }); }}
-
-    </script>
-@endsection
-@section('script')
-    <script>
-        layui.use(['jquery', 'form', 'laytpl','layer'], function () {
-            var form = layui.form;
-            var laytpl = layui.laytpl;
-            var $ = layui.$;
-            var layer = layui.layer;
-            form.on('select(categorySelect)', function (data) {
-                var categoryId = data.value;
-                $.get('/api/goods?q=' + categoryId, function (goodsData) {
-                    var getTpl = $('#goods').html();
-                    laytpl(getTpl).render(goodsData, function (html) {
-                        $('#goods-view').html(html);
-                        form.render('select');
-                    });
-                });
-            });
-
-            form.on('select(goodsSelect)', function (data) {
-                var goodsId = data.value;
-                getGoods(goodsId);
-            });
-
-            form.on('submit(confirmPay)', function(data){
-                $.post('/api/orders',data.field,function(res){
-                    if(res.code === 1){
-                        location.href = '/orders/'+res.data.order_id+'/pay';
-                    }else{
-                        layer.msg(res.message);
-                    }
-                });
-                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-            });
-
-            var getGoods = function (goodsId) {
-                $.get('/api/goods/' + goodsId, function (res) {
-                    $('#price').val(res.price);
-                    $('#goods_stock').val(res.goods_stock);
-                    $('#goods-introduce').html(res.introduce);
-                    if (res.type == 1) {
-                        $('#email-and-password').html('');
-                        var getTpl = $('#more-input-tpl').html();
-                        laytpl(getTpl).render(res.more_input, function (html) {
-                            $('#more-input').html(html);
-                        });
-                    } else if(res.type == 2){
-                        $('#more-input').html('');
-                        var emailAndPassword = $('#email-and-password-tpl').html();
-                        $('#email-and-password').html(emailAndPassword);
-                    }
-                });
-            }
-
-            var notice = function(){
-                //示范一个公告层
-                layer.open({
-                    type: 1
-                    ,title: false //不显示标题栏
-                    ,closeBtn: false
-                    ,area: '300px;'
-                    ,shade: 0.8
-                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                    ,btn: ['火速围观', '残忍拒绝']
-                    ,btnAlign: 'c'
-                    ,moveType: 1 //拖拽模式，0或者1
-                    ,content: '<div style="text-align:center;padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">去github给个star呗</div>'
-                    ,success: function(layero){
-                        var btn = layero.find('.layui-layer-btn');
-                        btn.find('.layui-layer-btn0').attr({
-                            href: 'https://github.com/zzDylan/faka'
-                            ,target: '_blank'
-                        });
-                    }
-                });
-            }
-            notice();
-        });
-    </script>
-@endsection
+<script type="text/javascript" src="/layuicms/layui/layui.js"></script>
+<script type="text/javascript" src="/layuicms/js/index.js"></script>
+<script type="text/javascript" src="/layuicms/js/cache.js"></script>
+</body>
+</html>

@@ -7,8 +7,16 @@ use App\Models\Category;
 
 class IndexController extends BaseController
 {
-    public function index(Request $request){
-        $categories = Category::all();
-        return view('home.index',compact('categories'));
+
+    public function index()
+    {
+        return view('home.index');
     }
+
+    public function selectGoods(Request $request)
+    {
+        $categories = Category::all();
+        return view('home.selectGoods', compact('categories'));
+    }
+
 }
