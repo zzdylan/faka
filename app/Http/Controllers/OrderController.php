@@ -41,6 +41,7 @@ class OrderController extends BaseController
             $order->pay_type = 1;
             $order->password = $request->password;
             $order->email = $request->email;
+            $order->pay_account = $request->pay_account;
             $order->more_input_value = $request->more_input_value;
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {
@@ -64,19 +65,51 @@ class OrderController extends BaseController
         return $result['response'];
     }
 
-    public function pay($id){
+    public function pay($id)
+    {
         $order = Order::find($id);
-        if(!$order){
+        if (!$order) {
             abort(404);
         }
         $result = $this->payQrcode($order);
         UpdateOrders::dispatch($order)
             ->delay(Carbon::now()->addSeconds(2));
-        return view('home.pay',compact('order','result'));
+        return view('home.pay', compact('order', 'result'));
     }
 
-    public function show(Order $order){
-        return $order;
+    public function data(Order $order, Request $request)
+    {
+        if ($order->type == 2) {
+            if($order->password != $request->password){
+                return ['code'=>1,'message'=>'密码错误'];
+            }
+            $cards = $order->cards->pluck('content')->toArray();
+            $data = implode("\r\n",$cards);
+            return ['code'=>0,'data'=>$data];
+        }
+        return ['code'=>0,'data'=>$order->pay_account];
+    }
+
+    public function index(Request $request)
+    {
+        $type = (int)$request->input('type', '');
+        $search = $request->search;
+        $password = $request->password;
+        switch ($type) {
+            case 1:
+                $orders = Order::where('type', $type)
+                    ->where('pay_account', $search)
+                    ->paginate($request->limit);
+                break;
+            case 2:
+                $orders = Order::where('type', $type)
+                    ->where('email', $search)
+                    ->paginate($request->limit);
+                break;
+            default:
+                $orders = Order::where('id', '<', 0)->paginate($request->limit);
+        }
+        return $orders;
     }
 
 }

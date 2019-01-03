@@ -19,4 +19,8 @@ class IndexController extends BaseController
         return view('home.selectGoods', compact('categories'));
     }
 
+    public function queryOrders(){
+        return view('home.queryOrders');
+    }
+
 }

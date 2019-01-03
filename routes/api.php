@@ -16,4 +16,5 @@ use Illuminate\Http\Request;
 Route::get('goods','GoodsController@index');
 Route::get('goods/{goods}','GoodsController@show');
 Route::post('orders','OrderController@store');
-Route::get('orders/{order}','OrderController@show');
+Route::get('orders','OrderController@index');
+Route::post('orders/data/{order}','OrderController@data');

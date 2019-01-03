@@ -181,7 +181,7 @@ class OrderController extends Controller
         $ids = $request->ids;
         $action = $request->action;
         Order::whereIn('id', $ids)->update(['status' => $action]);
-        return ['code' => 1];
+        return ['code' => 0];
     }
 
 }

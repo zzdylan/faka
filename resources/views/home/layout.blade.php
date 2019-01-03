@@ -2,39 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>发卡系统</title>
-    <link rel="stylesheet" href="{{asset('layui/css/layui.css')}}">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layuicms/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/layuicms/css/public.css" media="all" />
 </head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo">发卡系统</div>
-    </div>
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">--}}
-                <li class="layui-nav-item layui-nav-itemed"><a href="">自主下单</a></li>
-                {{--<li class="layui-nav-item"><a href="">进度查询</a></li>--}}
-            </ul>
-        </div>
-    </div>
-
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 20px; background-color: #F2F2F2;">
-            @yield('content')
-        </div>
-    </div>
-
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © <strong>Powered by <a target="_blank" href="https://github.com/zzDylan/faka">dylan</a></strong>
-    </div>
-</div>
-<script src="{{asset('layui/layui.js')}}"></script>
+<body class="childrenBody">
+@yield('content')
+<script type="text/javascript" src="/layui/layui.js"></script>
 @yield('script')
 </body>
 </html>

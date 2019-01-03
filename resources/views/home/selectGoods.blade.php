@@ -1,18 +1,19 @@
-<link rel="stylesheet" href="/layuicms/layui/css/layui.css" media="all" />
+@extends('home.layout')
+@section('content')
 <div class="layui-row">
     <div class="layui-col-md6">
         <div class="layui-card">
             <div id="test"></div>
             <div class="layui-card-header">购买商品</div>
             <div class="layui-card-body">
-                <form class="layui-form" action="{{url('')}}">
+                <form class="layui-form" action="">
                     <div class="layui-form-item">
                         <label class="layui-form-label">商品分类</label>
                         <div class="layui-input-block">
                             <select name="category_id" lay-filter="categorySelect" lay-verify="required">
                                 <option value="">请选择商品分类</option>
                                 @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -49,6 +50,9 @@
                     <div id="email-and-password">
 
                     </div>
+                    <div id="first-input">
+
+                    </div>
                     <div id="more-input">
 
                     </div>
@@ -71,6 +75,8 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
 <script id="goods" type="text/html">
     <option value="">请选择商品</option>
     @{{#  layui.each(d, function(index, item){ }}
@@ -105,9 +111,16 @@
         </div>
     </div>
     @{{#  }); }}
-
 </script>
-<script type="text/javascript" src="/layuicms/layui/layui.js"></script>
+<script id="pay-account-input-tpl" type="text/html">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@{{ d }}</label>
+        <div class="layui-input-block">
+            <input type="text" name="pay_account" placeholder="请输入@{{ d }}"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+</script>
 <script>
     layui.use(['jquery', 'form', 'laytpl','layer'], function () {
         var form = layui.form;
@@ -145,39 +158,23 @@
                 $('#goods-introduce').html(res.introduce);
                 if (res.type == 1) {
                     $('#email-and-password').html('');
-                    var getTpl = $('#more-input-tpl').html();
-                    laytpl(getTpl).render(res.more_input, function (html) {
+                    var getTpl1 = $('#pay-account-input-tpl').html();
+                    laytpl(getTpl1).render(res.first_input, function (html) {
+                        $('#first-input').html(html);
+                    });
+                    var getTpl2 = $('#more-input-tpl').html();
+                    laytpl(getTpl2).render(res.more_input, function (html) {
                         $('#more-input').html(html);
                     });
+
                 } else if(res.type == 2){
+                    $('#first-input').html('');
                     $('#more-input').html('');
                     var emailAndPassword = $('#email-and-password-tpl').html();
                     $('#email-and-password').html(emailAndPassword);
                 }
             });
         }
-        var notice = function(){
-            //示范一个公告层
-            layer.open({
-                type: 1
-                ,title: false //不显示标题栏
-                ,closeBtn: false
-                ,area: '300px;'
-                ,shade: 0.8
-                ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                ,btn: ['火速围观', '残忍拒绝']
-                ,btnAlign: 'c'
-                ,moveType: 1 //拖拽模式，0或者1
-                ,content: '<div style="text-align:center;padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">去github给个star呗</div>'
-                ,success: function(layero){
-                    var btn = layero.find('.layui-layer-btn');
-                    btn.find('.layui-layer-btn0').attr({
-                        href: 'https://github.com/zzDylan/faka'
-                        ,target: '_blank'
-                    });
-                }
-            });
-        }
-        //notice();
     });
 </script>
+@endsection

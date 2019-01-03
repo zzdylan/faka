@@ -19,7 +19,10 @@ Route::group(['prefix' => 'wechat_menus'], function () {
 });
 Route::get('/', 'IndexController@index');
 Route::get('/select_goods', 'IndexController@selectGoods');
+Route::get('/query_orders', 'IndexController@queryOrders');
 Route::get('/orders/{id}/pay', 'OrderController@pay');
 Route::get('test', function () {
+    $orders = \App\Models\Order::where('type',1)->where('pay_account','527844046')->paginate(15);
+    dd($orders);
     return view('home.test');
 });

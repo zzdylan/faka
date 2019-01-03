@@ -99,16 +99,16 @@
             <ul class="layui-tab-title top_tab" id="top_tabs">
                 <li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>首页</cite></li>
             </ul>
-            {{--<ul class="layui-nav closeBox">--}}
-                {{--<li class="layui-nav-item">--}}
-                    {{--<a href="javascript:;"><i class="layui-icon caozuo">&#xe643;</i> 页面操作</a>--}}
-                    {{--<dl class="layui-nav-child">--}}
-                        {{--<dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>--}}
-                        {{--<dd><a href="javascript:;" class="closePageOther"><i class="seraph icon-prohibit"></i> 关闭其他</a></dd>--}}
-                        {{--<dd><a href="javascript:;" class="closePageAll"><i class="seraph icon-guanbi"></i> 关闭全部</a></dd>--}}
-                    {{--</dl>--}}
-                {{--</li>--}}
-            {{--</ul>--}}
+            <ul class="layui-nav closeBox">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon caozuo">&#xe643;</i> 页面操作</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>
+                        <dd><a href="javascript:;" class="closePageOther"><i class="seraph icon-prohibit"></i> 关闭其他</a></dd>
+                        <dd><a href="javascript:;" class="closePageAll"><i class="seraph icon-guanbi"></i> 关闭全部</a></dd>
+                    </dl>
+                </li>
+            </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
                     <iframe src="/select_goods"></iframe>
@@ -120,7 +120,7 @@
     <div class="layui-footer footer">
         <p>
             <span>copyright @2018 dylan</span>　　
-            {{--<a onclick="donation()" class="layui-btn layui-btn-danger layui-btn-sm">捐赠作者</a>--}}
+            <a href="https://github.com/zzDylan/faka"><strong>github</strong></a>
         </p>
     </div>
 </div>
@@ -129,7 +129,7 @@
 <div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
 <div class="site-mobile-shade"></div>
 
-<script type="text/javascript" src="/layuicms/layui/layui.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
 <script type="text/javascript" src="/layuicms/js/index.js"></script>
 <script type="text/javascript" src="/layuicms/js/cache.js"></script>
 </body>

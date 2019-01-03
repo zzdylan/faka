@@ -9,6 +9,7 @@ class Order extends Model
     protected $casts = [
         'more_input_value' => 'array',
     ];
+    protected $hidden = ['password'];
 
     public function cards(){
         return $this->hasMany(Card::class,'order_id');
