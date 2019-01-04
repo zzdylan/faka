@@ -72,7 +72,7 @@ class OrderController extends BaseController
         $result = $this->payQrcode($order);
         UpdateOrders::dispatch($order)
             ->delay(Carbon::now()->addSeconds(2));
-        return view('home.pay', compact('order', 'result'));
+        return view('home.payment', compact('order', 'result'));
     }
 
     public function show(Order $order){

@@ -159,14 +159,17 @@
                 if (res.type == 1) {
                     $('#email-and-password').html('');
                     var getTpl1 = $('#pay-account-input-tpl').html();
-                    laytpl(getTpl1).render(res.first_input, function (html) {
-                        $('#first-input').html(html);
-                    });
+                    if(res.first_input){
+                        laytpl(getTpl1).render(res.first_input, function (html) {
+                            $('#first-input').html(html);
+                        });
+                    }
                     var getTpl2 = $('#more-input-tpl').html();
-                    laytpl(getTpl2).render(res.more_input, function (html) {
-                        $('#more-input').html(html);
-                    });
-
+                    if(res.more_input){
+                        laytpl(getTpl2).render(res.more_input, function (html) {
+                            $('#more-input').html(html);
+                        });
+                    }
                 } else if(res.type == 2){
                     $('#first-input').html('');
                     $('#more-input').html('');

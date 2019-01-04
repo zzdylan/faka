@@ -15,7 +15,7 @@ class GoodsController extends BaseController
     public function show(Goods $goods){
         $goods->goods_stock = $goods->goodsStock();
         $goods->more_input = str_replace('，',',',$goods->more_input);
-        $goods->more_input = explode(',',$goods->more_input);
+        $goods->more_input = $goods->more_input ? explode(',',$goods->more_input) : [];
         return $goods;
     }
 

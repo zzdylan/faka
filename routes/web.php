@@ -26,3 +26,6 @@ Route::get('test', function () {
     dd($orders);
     return view('home.test');
 });
+Route::get('receive/push',function(){
+
+});
