@@ -59,7 +59,8 @@ class UpdateOrders implements ShouldQueue
             if($this->order->type == 2){//自动发卡类型订单
                 \DB::transaction(function (){
                     if($this->order->consumeCards() < $this->order->count){
-                        throw new InvalidRequestException('库存不足');
+                        \Log::info('卡密库存不足');
+                        return;
                     }
                     event(new OrderShipped($this->order));
                     $this->order->status = 3;
@@ -79,7 +80,8 @@ class UpdateOrders implements ShouldQueue
                 return;
             } else {
                 UpdateOrders::dispatch($this->order)
-                    ->delay(Carbon::now()->addSeconds(2));
+                    ->delay(Carbon::now()->addSeconds(2))
+                    ->onQueue('orders');
             }
         }
     }

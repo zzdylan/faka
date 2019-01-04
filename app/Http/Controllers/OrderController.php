@@ -58,6 +58,9 @@ class OrderController extends BaseController
             'qr_name' => $order->name, // 收款理由
             'qr_source' => $order->trade_no, // 自定义字段，你可以设置为网站订单号
         ]);
+        if (isset($result['error_response'])) {
+            abort(500, $result['error_response']['msg']);
+        }
         $order->out_trade_no = $result['response']['qr_id'];
         $order->save();
         return $result['response'];
@@ -71,25 +74,27 @@ class OrderController extends BaseController
         }
         $result = $this->payQrcode($order);
         UpdateOrders::dispatch($order)
-            ->delay(Carbon::now()->addSeconds(2));
+            ->delay(Carbon::now()->addSeconds(2))
+            ->onQueue('orders');
         return view('home.payment', compact('order', 'result'));
     }
 
-    public function show(Order $order){
+    public function show(Order $order)
+    {
         return $order;
     }
 
     public function data(Order $order, Request $request)
     {
         if ($order->type == 2) {
-            if($order->password != $request->password){
-                return ['code'=>1,'message'=>'密码错误'];
+            if ($order->password != $request->password) {
+                return ['code' => 1, 'message' => '密码错误'];
             }
             $cards = $order->cards->pluck('content')->toArray();
-            $data = implode("\r\n",$cards);
-            return ['code'=>0,'data'=>$data];
+            $data = implode("\r\n", $cards);
+            return ['code' => 0, 'data' => $data];
         }
-        return ['code'=>0,'data'=>$order->pay_account];
+        return ['code' => 0, 'data' => $order->pay_account];
     }
 
     public function index(Request $request)
