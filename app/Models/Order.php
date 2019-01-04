@@ -18,6 +18,7 @@ class Order extends Model
     public function consumeCards(){
         return (new Card())->newQuery()
             ->where('status', 0)
+            ->where('goods_id',$this->goods_id)
             ->limit($this->count)
             ->update(['status'=>1,'order_id'=>$this->id]);
     }

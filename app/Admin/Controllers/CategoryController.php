@@ -80,6 +80,7 @@ class CategoryController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Category);
+        $grid->model()->orderBy('sort','asc');
         $grid->disableFilter();
         $grid->disableExport();
         $grid->actions(function ($actions) {

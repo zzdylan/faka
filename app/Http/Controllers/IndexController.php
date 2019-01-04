@@ -15,7 +15,7 @@ class IndexController extends BaseController
 
     public function selectGoods(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('sort','asc')->get();
         return view('home.selectGoods', compact('categories'));
     }
 

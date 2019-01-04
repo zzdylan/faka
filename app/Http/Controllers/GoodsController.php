@@ -9,7 +9,10 @@ class GoodsController extends BaseController
 {
     public function index(Request $request){
         $categoryId = $request->get('q');
-        return Goods::select('id','name as text')->where('category_id', $categoryId)->get();
+        return Goods::select('id','name as text')
+            ->where('category_id', $categoryId)
+            ->orderBy('sort','asc')
+            ->get();
     }
 
     public function show(Goods $goods){

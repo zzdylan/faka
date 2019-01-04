@@ -81,7 +81,7 @@ class GoodsController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Goods);
-
+        $grid->model()->orderBy('sort','asc');
         $grid->id('ID');
         $grid->sort('排序');
         $grid->category()->name('分类名称');

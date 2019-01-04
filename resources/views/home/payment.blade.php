@@ -82,7 +82,7 @@
 </header>
 <section>
     <div class="info-wrapper">
-        <h1 class="text-center price">￥0.01</h1>
+        <h1 class="text-center price">￥{{$order->total_price}}</h1>
         <div class="qr-code text-center">
             <img src="{{$result['qr_code']}}"
                  alt="">

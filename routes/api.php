@@ -19,4 +19,5 @@ Route::post('orders','OrderController@store');
 Route::get('orders','OrderController@index');
 Route::post('orders/data/{order}','OrderController@data');
 Route::get('orders/{order}','OrderController@show');
+Route::post('upload','UploadController@store');
 Route::post('receive/push','ReceivePushController@index');
