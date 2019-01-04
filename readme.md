@@ -94,7 +94,7 @@
    php artisan queue:work
    ```
    
-  配合supervisor和守护运行。也可以使用以下命令达到后台运行队列的效果 
+  配合supervisor可以守护运行。也可以使用以下命令达到后台运行队列的效果 
    
    ```shell
    nohup php artisan queue:work &
