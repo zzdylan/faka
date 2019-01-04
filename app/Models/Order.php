@@ -23,4 +23,8 @@ class Order extends Model
             ->update(['status'=>1,'order_id'=>$this->id]);
     }
 
+    public function goods(){
+        return $this->belongsTo(Goods::class,'goods_id');
+    }
+
 }

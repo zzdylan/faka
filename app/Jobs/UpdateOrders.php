@@ -59,14 +59,15 @@ class UpdateOrders implements ShouldQueue
             if($this->order->type == 2){//自动发卡类型订单
                 \DB::transaction(function (){
                     if($this->order->consumeCards() < $this->order->count){
-                        \Log::info('卡密库存不足');
-                        return;
+                        throw new InvalidRequestException('该商品库存不足');
                     }
                     event(new OrderShipped($this->order));
                     $this->order->status = 3;
                     $this->order->save();
                 });
             }
+            Goods::whereId($this->order->goods_id)
+                ->increment('sold_count', $this->order->count);
         } else {//未支付
             $expirationTime = 5;
             if (Carbon::now()->diffInMinutes($this->order->created_at) >= $expirationTime) {//订单过期

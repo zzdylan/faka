@@ -41,4 +41,8 @@ class Goods extends Model
         $this->increment('stock', $amount);
     }
 
+    public function addSold($amount){
+        $this->increment('sold_count', $amount);
+    }
+
 }

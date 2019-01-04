@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Events\OrderShipped;
+use App\Models\Goods;
 
 class ReceivePushController extends BaseController
 {
@@ -15,7 +16,7 @@ class ReceivePushController extends BaseController
         if ($request->type == 'trade_TradePaid'
             && $request->status == 'TRADE_PAID') {
             $msg = json_decode(urldecode($request->msg),true);
-            \Log::info('订单推送',$msg);
+            \Log::info('接受有赞回调',$msg);
             $qrId = $msg['qr_info']['qr_id'];
             $order = Order::Where('out_trade_no',$qrId)->first();
             if ($order &&  $order->status == 0) {
@@ -26,6 +27,9 @@ class ReceivePushController extends BaseController
                 switch ($payType){
                     case 10://微信支付
                         $order->pay_type = 1;
+                        break;
+                    case 2:
+                        $order->pay_type = 2;
                         break;
                         //支付宝支付状态todo
                 }
@@ -42,6 +46,8 @@ class ReceivePushController extends BaseController
                         $order->save();
                     });
                 }
+                Goods::whereId($order->goods_id)
+                    ->increment('sold_count', $order->count);
             }
         }
         return ['code'=>0,'msg'=>'success'];
