@@ -93,11 +93,12 @@
    ```shell
    php artisan queue:work
    ```
-  配合supervisor和守护运行。也可以使用命令达到后台运行队列的效果 
    
-    ```shell
-     nohup php artisan queue:work &
-    ```
+  配合supervisor和守护运行。也可以使用以下命令达到后台运行队列的效果 
+   
+   ```shell
+   nohup php artisan queue:work &
+   ```
   #### 8.申请有赞微小店
   * [详细操作截图链接][3]  
   整体流程  
