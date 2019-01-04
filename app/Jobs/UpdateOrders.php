@@ -66,6 +66,7 @@ class UpdateOrders implements ShouldQueue
                     $this->order->save();
                 });
             }
+            //商品增加销量
             Goods::whereId($this->order->goods_id)
                 ->increment('sold_count', $this->order->count);
         } else {//未支付
