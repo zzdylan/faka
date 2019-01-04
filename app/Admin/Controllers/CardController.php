@@ -145,7 +145,7 @@ class CardController extends Controller
             ->rules('required', [
                 'required' => '请输入卡密',
             ]);
-
+        $form->select('filter', '过滤重复卡密')->options(['不过滤','过滤']);
         return $form;
     }
 
@@ -161,7 +161,7 @@ class CardController extends Controller
         $datas = [];
         $contentDatas = [];
         foreach ($cards as $key => $card) {
-            if(in_array($card,$contentDatas)){
+            if(in_array($card,$contentDatas) && $data['filter']){
                 continue;
             }
             $contentDatas[] = $card;
@@ -169,16 +169,17 @@ class CardController extends Controller
             $datas[$key]['goods_id'] = $goodsId;
             $datas[$key]['created_at'] = Carbon::now();
         }
-        $existsCards = Card::whereIn('content',$cards)->get();
-        if(!$existsCards->isEmpty()){
-            $existsCardsContent = $existsCards->pluck('content')->toArray();
-            $existsString = implode(',',$existsCardsContent);
-            $error = new MessageBag([
-                'message' => "卡密重复({$existsString})",
-            ]);
-            return back()->with(compact('error'));
+        if($data['filter']){
+            $existsCards = Card::whereIn('content',$cards)->get();
+            if(!$existsCards->isEmpty()){
+                $existsCardsContent = $existsCards->pluck('content')->toArray();
+                $existsString = implode(',',$existsCardsContent);
+                $error = new MessageBag([
+                    'message' => "卡密重复({$existsString})",
+                ]);
+                return back()->with(compact('error'));
+            }
         }
-
         Card::insert($datas);
         admin_toastr(trans('admin.save_succeeded'));
         $resourcesPath = $this->form()->resource(-1);

@@ -59,7 +59,7 @@ class OrderController extends BaseController
             'qr_source' => $order->trade_no, // 自定义字段，你可以设置为网站订单号
         ]);
         if (isset($result['error_response'])) {
-            abort(500, $result['error_response']['msg']);
+            abort(400, $result['error_response']['msg']);
         }
         $order->out_trade_no = $result['response']['qr_id'];
         $order->save();
@@ -74,8 +74,7 @@ class OrderController extends BaseController
         }
         $result = $this->payQrcode($order);
         UpdateOrders::dispatch($order)
-            ->delay(Carbon::now()->addSeconds(2))
-            ->onQueue('orders');
+            ->delay(Carbon::now()->addSeconds(2));
         return view('home.payment', compact('order', 'result'));
     }
 

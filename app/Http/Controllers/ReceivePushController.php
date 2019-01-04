@@ -16,6 +16,7 @@ class ReceivePushController extends BaseController
         if ($request->type == 'trade_TradePaid'
             && $request->status == 'TRADE_PAID') {
             $msg = json_decode(urldecode($request->msg),true);
+            \Log::info('有赞支付回调',$msg);
             $qrId = $msg['qr_info']['qr_id'];
             $order = Order::Where('out_trade_no',$qrId)->first();
             if ($order &&  $order->status == 0) {

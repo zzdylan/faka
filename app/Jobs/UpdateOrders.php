@@ -82,8 +82,7 @@ class UpdateOrders implements ShouldQueue
                 return;
             } else {
                 UpdateOrders::dispatch($this->order)
-                    ->delay(Carbon::now()->addSeconds(2))
-                    ->onQueue('orders');
+                    ->delay(Carbon::now()->addSeconds(2));
             }
         }
     }
