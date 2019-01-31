@@ -114,7 +114,7 @@
   消息推送配置中勾选“交易消息V3”中的交易支付，推送网址填写http://{domain}/api/receive/push  
   
 
-  [1]: http://118.89.190.171:8080/
-  [2]: http://118.89.190.171:8080/admin
-  [3]: http://118.89.190.171:8080/youzan.html
+  [1]: http://demo-faka.51godream.com
+  [2]: http://demo-faka.51godream.com/admin
+  [3]: http:demo-faka.51godream.com/youzan.html
   [4]: http://faka.51godream.com
