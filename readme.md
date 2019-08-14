@@ -37,11 +37,7 @@
       git clone https://github.com/zzDylan/faka
   
   
-  #### 2. 安装扩展包依赖
-  
-  	composer install
-  
-  #### 3. 生成配置文件
+  #### 2. 生成配置文件
   
   ```
   cp .env.example .env
@@ -61,6 +57,10 @@
   ...
   ...
   ```
+  
+ #### 3. 安装扩展包依赖
+    
+    	composer install
   本系统对接的是有payjs，不需要企业认证，是个人收款的解决方案
 
   
