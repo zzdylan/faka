@@ -85,6 +85,12 @@
   php artisan key:generate
   ```
 
+ #### 7. 软链接存储目录
+  
+  ```shell
+  php artisan storage:link
+  ```
+
  #### 7.给予目录权限,项目根目录下执行
    ```shell
    chmod -R 777 storage/ bootstrap/
