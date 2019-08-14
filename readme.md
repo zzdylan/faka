@@ -91,7 +91,7 @@
   php artisan storage:link
   ```
 
- #### 7.给予目录权限,项目根目录下执行
+ #### 8.给予目录权限,项目根目录下执行
    ```shell
    chmod -R 777 storage/ bootstrap/
    chown -R www:www *
