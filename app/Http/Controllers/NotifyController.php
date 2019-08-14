@@ -26,7 +26,6 @@ class NotifyController extends BaseController
                     $order->status = Order::PAYED;
                     $order->real_total_price = bcdiv($data['total_fee'], 100);
                     $order->pay_time = $payTime;
-                    $order->pay_type = Order::WECHAT;
                     $order->save();
                     \DB::transaction(function () use ($order) {
                         if ($order->type == 2 && $order->consumeCards() < $order->count) { //自动发卡类型订单
