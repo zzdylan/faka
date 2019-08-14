@@ -48,7 +48,7 @@ return [
     */
     'route' => [
 
-        'prefix' => 'zzadmin',
+        'prefix' => 'admin',
 
         'namespace' => 'App\\Admin\\Controllers',
 
