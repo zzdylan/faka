@@ -65,8 +65,12 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">支付方式</label>
                         <div class="layui-input-block">
+                            @if(config('payjs.wechat'))
                             <input type="radio" name="pay_type" value="1" title="微信" checked>
-                            <input type="radio" name="pay_type" value="2" title="支付宝" >
+                            @endif
+                            @if(config('payjs.alipay'))
+                            <input type="radio" name="pay_type" value="2" title="支付宝" @if(!config('payjs.wechat')) checked @endif>
+                            @endif
                         </div>
                     </div>
                     <div class="layui-form-item">
