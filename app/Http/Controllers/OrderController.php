@@ -82,6 +82,7 @@ class OrderController extends BaseController
         }
         try{
             $payjsData = Payjs::native($data);
+            dd($payjsData);
             if($payjsData['return_code'] != 1){
                 abort(400,$payjsData['return_msg']);
             }
