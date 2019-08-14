@@ -16,6 +16,7 @@
   - 商品管理
   - 卡密管理
   - 订单管理
+  - 邮件模板
   
   ## 运行环境建议
   
@@ -46,7 +47,7 @@
   cp .env.example .env
   ```
   
-  你可以根据情况修改 `.env` 文件里的内容，如数据库连接、缓存、邮件设置、七牛云存储等：
+  你可以根据情况修改 `.env` 文件里数据库连接信息和APP_URL为自己的：
   
   ```
   APP_URL=http://localhost
@@ -59,13 +60,9 @@
   DB_PASSWORD=XXX
   ...
   ...
-  YOUZAN_CLIENT_ID=XXX
-  YOUZAN_CLIENT_SECRET=XXX
-  YOUZAN_KDT_ID=XXX
   ```
-  本系统对接的是有赞支付，不需要企业认证，是个人收款的解决方案（申请教程见最下方）  
-  申请完之后把三个参数填入到.env的最后三个参数中（YOUZAN_CLIENT_ID、YOUZAN_CLIENT_SECRET、YOUZAN_KDT_ID），  
-  三个参数的意思分别为有赞的client_id、client_secret、授权店铺id
+  本系统对接的是有payjs，不需要企业认证，是个人收款的解决方案
+
   
   #### 4. 生成数据表
   
@@ -87,30 +84,7 @@
   ```shell
   php artisan key:generate
   ```
-  
-  #### 7. 开启队列
-    
-   ```shell
-   php artisan queue:work
-   ```
-   
-  配合supervisor可以守护运行。也可以使用以下命令达到后台运行队列的效果 
-   
-   ```shell
-   nohup php artisan queue:work &
-   ```
-  #### 8.申请有赞微小店
-  * [详细操作截图链接][3]  
-  整体流程  
-  第一步：开通微小店  
-  去这里注册并开通小店：https://h5.youzan.com/v2/index/wxdpc (手机下载客户端开通哦，不是微商城！是微小店，免费的！)  
-  第二步：注册有赞云  
-  创建自用型应用，填写应用名称，下一步，选择你上面开通的小店名称并完成授权绑定。  
-  
-  #### 9.消息推送配置
-  消息推送配置中勾选“交易消息V3”中的交易支付，推送网址填写http://{domain}/api/receive/push  
-  
 
-  [1]: http://118.89.190.171:8080/
-  [2]: http://118.89.190.171:8080/admin
-  [3]: http://118.89.190.171:8080/youzan.html
+
+  [1]: http://faka.51godream.com/
+  [2]: http://faka.51godream.com/zzadmin
