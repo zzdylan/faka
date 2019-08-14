@@ -8,6 +8,7 @@
     
   目前对接了payjs扫码支付和jsapi支付方式,
   在电脑上会用扫码支付，在微信中会使用jsapi方式支付  
+  从邀请链接进去会有奖励https://payjs.cn/ref/DLXXLD
     
   qq交流群：707730731
   
