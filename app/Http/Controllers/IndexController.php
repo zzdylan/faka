@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Goods;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
 class IndexController extends BaseController
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('home.index');
+        $param = http_build_query($request->all());
+        return view('home.index',['param'=>$param]);
     }
 
     public function selectGoods(Request $request)
     {
-        $categories = Category::orderBy('sort','asc')->get();
-        return view('home.selectGoods', compact('categories'));
+        $data = [];
+        $categories = Category::where('status',1)->orderBy('sort','asc')->get();
+        if($request->goods_id && $currentGoods = Goods::find($request->goods_id)){
+            $data['currentGoods'] = $currentGoods;
+        }
+        $data['categories'] = $categories;
+        return view('home.selectGoods', $data);
     }
 
     public function queryOrders(){

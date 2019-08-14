@@ -14,10 +14,11 @@ use Illuminate\Http\Request;
 */
 
 Route::get('goods','GoodsController@index');
+Route::get('card_goods','GoodsController@getByCardType');
 Route::get('goods/{goods}','GoodsController@show');
 Route::post('orders','OrderController@store');
 Route::get('orders','OrderController@index');
 Route::post('orders/data/{order}','OrderController@data');
 Route::get('orders/{order}','OrderController@show');
 Route::post('upload','UploadController@store');
-Route::post('receive/push','ReceivePushController@index');
+Route::any('notify','NotifyController@payjs');

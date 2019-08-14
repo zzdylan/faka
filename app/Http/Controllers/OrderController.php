@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Goods;
 use Carbon\Carbon;
-use App\Jobs\UpdateOrders;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Services\PersonalPay;
+use Xhat\Payjs\Facades\Payjs;
 
 class OrderController extends BaseController
 {
@@ -37,10 +39,12 @@ class OrderController extends BaseController
             $order->count = $request->count;
             $order->total_price = $goods->price * $request->count;
             $order->type = $goods->type;
+            $order->pay_type = $request->pay_type;
             $order->password = $request->password;
             $order->email = $request->email;
             $order->pay_account = $request->pay_account;
             $order->more_input_value = $request->more_input_value;
+            $order->ip = $request->ip();
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {
                 throw new InvalidRequestException('该商品库存不足');
@@ -50,32 +54,40 @@ class OrderController extends BaseController
         return $this->success('创建订单成功', ['order_id' => $order->id]);
     }
 
-    public function payQrcode(Order $order)
-    {
-        $result = app('youzan')->post('youzan.pay.qrcode.create', [
-            'qr_type' => 'QR_TYPE_DYNAMIC',  // 确定金额二维码，只能被支付一次
-            'qr_price' => $order->total_price * 100,  // 金额：分
-            'qr_name' => $order->name, // 收款理由
-            'qr_source' => $order->trade_no, // 自定义字段，你可以设置为网站订单号
-        ]);
-        if (isset($result['error_response'])) {
-            abort(400, $result['error_response']['msg']);
-        }
-        $order->out_trade_no = $result['response']['qr_id'];
-        $order->save();
-        return $result['response'];
-    }
-
     public function pay($id)
     {
         $order = Order::find($id);
         if (!$order) {
             abort(404);
         }
-        $result = $this->payQrcode($order);
-        UpdateOrders::dispatch($order)
-            ->delay(Carbon::now()->addSeconds(2));
-        return view('home.payment', compact('order', 'result'));
+        // 构造订单基础信息
+        $data = [
+            'body' => $order->name,
+            'total_fee' => bcmul($order->total_price,100),
+            'out_trade_no' => $order->trade_no,
+            'attach' => '',                    // 订单附加信息(可选参数)
+            'notify_url' => url('api/notify'),     // 异步通知地址(可选参数)
+        ];
+        if(is_weixin()){
+			$wechatInfo = session('payjs_wechat_info');
+			$data['openid'] = $wechatInfo['openid'];
+			$payjsData = Payjs::jsapi($data);
+			if($payjsData['return_code'] != 1){
+				return $this->error($payjsData['return_msg']);
+			}
+			return view('home.mobilePayment',['order'=>$order,'pay_data'=>$payjsData['jsapi']]);
+        }
+        try{
+            $payjsData = Payjs::native($data);
+            if($payjsData['return_code'] != 1){
+                abort(400,$payjsData['return_msg']);
+            }
+            $imageBase64 = base64_encode(QrCode::format('png')->size(200)->generate($payjsData['code_url']));
+        }catch (\Exception $e){
+            return "<script>alert(\"{$e->getMessage()}\");location.href='/'</script>";
+        }
+        $payQrcode = 'data:image/png;base64,'.$imageBase64;
+        return view('home.payment', compact('order', 'payQrcode'));
     }
 
     public function show(Order $order)

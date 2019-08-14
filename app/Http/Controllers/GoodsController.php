@@ -15,6 +15,15 @@ class GoodsController extends BaseController
             ->get();
     }
 
+    public function getByCardType(Request $request){
+        $categoryId = $request->get('q');
+        return Goods::select('id','name as text')
+            ->where('category_id', $categoryId)
+            ->where('type',2)
+            ->orderBy('sort','asc')
+            ->get();
+    }
+
     public function show(Goods $goods){
         $goods->goods_stock = $goods->goodsStock();
         $goods->more_input = str_replace('，',',',$goods->more_input);

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>发卡系统</title>
+    <title>{{config('base.site_name')}}</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -19,7 +19,7 @@
     <!-- 顶部 -->
     <div class="layui-header header">
         <div class="layui-main mag0">
-            <a href="#" class="logo">发卡系统</a>
+            <a href="#" class="logo">{{config('base.site_name')}}</a>
             <!-- 显示/隐藏菜单 -->
             <a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
             <!-- 顶级菜单 -->
@@ -49,10 +49,10 @@
                 {{--</li>--}}
             {{--</ul>--}}
             <!-- 顶部右侧菜单 -->
-            {{--<ul class="layui-nav top_menu">--}}
-                {{--<li class="layui-nav-item" pc>--}}
-                    {{--<a href="javascript:;" class="clearCache"><i class="layui-icon" data-icon="&#xe640;">&#xe640;</i><cite>清除缓存</cite><span class="layui-badge-dot"></span></a>--}}
-                {{--</li>--}}
+            <ul class="layui-nav top_menu">
+                <li class="layui-nav-item" pc>
+                    <a href="javascript:;" class="showNotice"><i class="layui-icon">&#xe645;</i><cite>系统公告</cite><span class="layui-badge-dot"></span></a>
+                </li>
                 {{--<li class="layui-nav-item lockcms" pc>--}}
                     {{--<a href="javascript:;"><i class="seraph icon-lock"></i><cite>锁屏</cite></a>--}}
                 {{--</li>--}}
@@ -67,14 +67,14 @@
                         {{--<dd><a href="/layuicms/page/login/login.html" class="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>--}}
                     {{--</dl>--}}
                 {{--</li>--}}
-            {{--</ul>--}}
+            </ul>
         </div>
     </div>
     <!-- 左侧导航 -->
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
-            <a class="img" title="我的头像" ><img src="/layuicms/images/face.jpg" class="userAvatar"></a>
-            <p>你好！<span class="userName"></span> 欢迎来到发卡系统</p>
+            <a class="img" title="logo" ><img src="{{Storage::url(config('base.site_logo'))}}" class="userAvatar"></a>
+            <p>你好！<span class="userName"></span> 欢迎来到{{config('base.site_name')}}</p>
         </div>
         {{--<!-- 搜索 -->--}}
         {{--<div class="layui-form component">--}}
@@ -111,7 +111,7 @@
             </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
-                    <iframe src="/select_goods"></iframe>
+                    <iframe src="/select_goods?{{$param}}"></iframe>
                 </div>
             </div>
         </div>

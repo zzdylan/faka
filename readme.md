@@ -7,9 +7,6 @@
   faka是一个简洁的后台管理系统基础框架  
   qq交流群：707730731
   
-  
-  另附个人免签支付系统案例(非有赞，不经过第三方、无费率、可对接任何语言开发网站,免签支付系统源码需赞助获取)   [免签支付案例][4] 
-  
   ## 后台功能如下
   - 菜单管理
   - 后台用户管理
@@ -114,7 +111,6 @@
   消息推送配置中勾选“交易消息V3”中的交易支付，推送网址填写http://{domain}/api/receive/push  
   
 
-  [1]: http://demo-faka.51godream.com
-  [2]: http://demo-faka.51godream.com/admin
-  [3]: http:demo-faka.51godream.com/youzan.html
-  [4]: http://faka.51godream.com
+  [1]: http://118.89.190.171:8080/
+  [2]: http://118.89.190.171:8080/admin
+  [3]: http://118.89.190.171:8080/youzan.html

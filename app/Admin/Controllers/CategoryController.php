@@ -23,8 +23,8 @@ class CategoryController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('商品分类')
+            ->description('列表')
             ->body($this->grid());
     }
 
@@ -38,8 +38,8 @@ class CategoryController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header('商品分类')
+            ->description('详情')
             ->body($this->detail($id));
     }
 
@@ -53,8 +53,8 @@ class CategoryController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('商品分类')
+            ->description('编辑')
             ->body($this->form()->edit($id));
     }
 
@@ -67,8 +67,8 @@ class CategoryController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header('商品分类')
+            ->description('创建')
             ->body($this->form());
     }
 
@@ -89,6 +89,9 @@ class CategoryController extends Controller
         $grid->id('ID');
         $grid->sort('排序');
         $grid->name('名称');
+        $grid->status('上架状态')->display(function ($status) {
+            return $status ? '<span class="label label-success">是</span>' : '<span class="label label-danger">否</span>';
+        });
         $grid->created_at('Created at');
         $grid->updated_at('Updated at');
 
@@ -127,6 +130,7 @@ class CategoryController extends Controller
         $form->text('name','分类名称')->rules('required',[
             'required' => '请输入分类名称',
         ]);
+        $form->select('status', '是否上架')->options(['下架','上架'])->default(1);
         $form->display('Created at');
         $form->display('Updated at');
         return $form;

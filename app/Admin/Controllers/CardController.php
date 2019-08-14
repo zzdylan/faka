@@ -27,8 +27,8 @@ class CardController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('卡密')
+            ->description('列表')
             ->body($this->grid());
     }
 
@@ -42,8 +42,8 @@ class CardController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header('卡密')
+            ->description('详情')
             ->body($this->detail($id));
     }
 
@@ -57,8 +57,8 @@ class CardController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('卡密')
+            ->description('编辑')
             ->body($this->form()->edit($id));
     }
 
@@ -71,8 +71,8 @@ class CardController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header('卡密')
+            ->description('创建')
             ->body($this->form());
     }
 
@@ -137,7 +137,7 @@ class CardController extends Controller
         }
         $form->select('category_id', '商品分类')
             ->options($categoryOptions)
-            ->load('goods_id', '/api/goods');
+            ->load('goods_id', '/api/card_goods');
         $form->select('goods_id', '商品')->rules('required', [
             'required' => '请选择商品',
         ]);

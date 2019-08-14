@@ -6,18 +6,18 @@ class BaseController extends Controller
 {
 
     public function success($message='',$data=[]){
-        return response()->json([
+        return [
             'data' => $data,
             'message' => $message,
             'code' => 1
-        ]);
+        ];
     }
 
     public function error($message=''){
-        return response()->json([
+        return [
             'message' => $message,
             'code' => 0
-        ]);
+        ];
     }
 
 }

@@ -4,14 +4,19 @@ layui.use(['form','jquery',"layer"],function() {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer;
-
+    //从服务器端获取公告信息
+    var noticeData =  localStorage.getItem('noticeData');
+    var noticeDataJson = JSON.parse(noticeData);
     //判断是否web端打开
     if(!/http(s*):\/\//.test(location.href)){
         layer.alert("请先将项目部署到 localhost 下再进行访问【建议通过tomcat、webstorm、hb等方式运行，不建议通过iis方式运行】，否则部分数据将无法显示");
     }else{    //判断是否处于锁屏状态【如果关闭以后则未关闭浏览器之前不再显示】
         if(window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true"){
-            showNotice();
+            if(noticeData.open == 1){
+                showNotice(noticeDataJson);
+            }
         }
+        //showNotice(noticeDataJson);
     }
 
     //判断是否设置过头像，如果设置过则修改顶部、左侧和个人资料中的头像，否则使用默认头像
@@ -47,6 +52,30 @@ layui.use(['form','jquery',"layer"],function() {
             }
         });
     }
+    function showNotice(noticeData){
+        layer.open({
+            type: 1,
+            title: "系统公告",
+            area: '300px',
+            shade: 0.8,
+            id: 'LAY_layuipro',
+            btn: [noticeData.button_title],
+            moveType: 1,
+            content: noticeData.content,
+            success: function(layero){
+                var btn = layero.find('.layui-layer-btn');
+                btn.css('text-align', 'center');
+                btn.find('.layui-layer-btn0').attr({
+                    href: noticeData.button_url
+                    ,target: '_blank'
+                });
+                tipsShow();
+            },
+            cancel: function(index, layero){
+                tipsShow();
+            }
+        });
+    }
     function tipsShow(){
         window.sessionStorage.setItem("showNotice","true");
         // if($(window).width() > 432){  //如果页面宽度不足以显示顶部“系统公告”按钮，则不提示
@@ -56,8 +85,8 @@ layui.use(['form','jquery',"layer"],function() {
         //     });
         // }
     }
-    $(".showNotice").on("click",function(){
-        showNotice();
+    $(".showNotice").on("click",noticeDataJson,function(){
+        showNotice(noticeDataJson);
     })
 
     //锁屏

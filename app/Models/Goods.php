@@ -15,6 +15,10 @@ class Goods extends Model
         return $this->hasMany(Card::class,'goods_id');
     }
 
+    public function emailTemplate(){
+        return $this->belongsTo(EmailTemplate::class,'email_template_id');
+    }
+
     public function goodsStock(){
         switch ($this->type){
             case 1:

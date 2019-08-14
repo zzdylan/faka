@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    const WECHAT = 1;
+    const ALIPAY = 2;
+    const NO_PAY = 0;
+    const PAYED = 1;
+    const EXPIRE = 2;
+    const SUCCESS = 3;
+    const ERROR = 4;
     protected $casts = [
         'more_input_value' => 'array',
     ];

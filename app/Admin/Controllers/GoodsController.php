@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Category;
+use App\Models\EmailTemplate;
 use App\Models\Goods;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -24,8 +25,8 @@ class GoodsController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('商品')
+            ->description('列表')
             ->body($this->grid());
     }
 
@@ -39,8 +40,8 @@ class GoodsController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header('商品')
+            ->description('详情')
             ->body($this->detail($id));
     }
 
@@ -54,8 +55,8 @@ class GoodsController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('商品')
+            ->description('编辑')
             ->body($this->form()->edit($id));
     }
 
@@ -68,8 +69,8 @@ class GoodsController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header('商品')
+            ->description('创建')
             ->body($this->form());
     }
 
@@ -86,6 +87,7 @@ class GoodsController extends Controller
         $grid->sort('排序');
         $grid->category()->name('分类名称');
         $grid->name('商品名称');
+        $grid->price('商品价格');
         $grid->type('商品类型')->display(function ($type) {
             switch ($this->type){
                 case 1:
@@ -151,9 +153,15 @@ class GoodsController extends Controller
         $form->editor('introduce','商品介绍');
         $form->text('first_input','第一个输入框标题')->help('如商品是自动发卡请勿填写!');
         $form->text('more_input','更多输入框')->help('例如 密码,大区 以英文逗号分割;如商品是自动发卡请勿填写!');
-        $form->number('stock','商品库存')->min(0)->help('如商品是自动发卡请勿填写，导入卡密时会自动识别');
+        $form->number('stock','商品库存')->default(0)->help('如商品是自动发卡请勿填写，导入卡密时会自动识别');
         $form->select('type','商品类型')->options([1=>'手工商品',2=>'自动发卡'])->default(1);
         $form->select('status', '是否上架')->options(['下架','上架'])->default(1);
+        $emailTemplateOptions = [];
+        $emailTemplates = EmailTemplate::all();
+        foreach($emailTemplates as $emailTemplate){
+            $emailTemplateOptions[$emailTemplate->id] = $emailTemplate['name'];
+        }
+        $form->select('email_template_id', '邮件模板')->options($emailTemplateOptions)->default(1);
         $form->display('Created at');
         $form->display('Updated at');
 

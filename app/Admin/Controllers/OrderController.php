@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Events\OrderShipped;
 use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -11,6 +12,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use App\Admin\Extensions\Tools\HandleOrders;
 use Illuminate\Http\Request;
+use App\Admin\Extensions\OrdersExporter;
 
 class OrderController extends Controller
 {
@@ -25,8 +27,8 @@ class OrderController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('订单')
+            ->description('列表')
             ->body($this->grid());
     }
 
@@ -82,10 +84,11 @@ class OrderController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Order);
+        $grid->exporter(new OrdersExporter());
         $grid->tools(function ($tools) {
             $tools->batch(function ($batch) {
-                $batch->add('处理成功', new HandleOrders(3));
-                $batch->add('处理失败', new HandleOrders(4));
+                $batch->add('处理成功', new HandleOrders(Order::SUCCESS));
+                $batch->add('处理失败', new HandleOrders(Order::ERROR));
             });
         });
         $grid->actions(function ($actions) {
@@ -122,7 +125,9 @@ class OrderController extends Controller
                     return '';
             }
         });
-        $grid->password('查询密码');
+        $grid->password('查询密码')->display(function($password){
+            return $this->password;
+        });
         $grid->status('订单状态')->display(function ($status) {
             switch ($status) {
                 case 0:
@@ -137,6 +142,7 @@ class OrderController extends Controller
                     return '<span class="label label-danger">处理失败</span>';
             }
         });
+        $grid->ip('ip');
         $grid->created_at('创建时间');
         $grid->pay_time('支付时间');
 
@@ -181,6 +187,12 @@ class OrderController extends Controller
         $ids = $request->ids;
         $action = $request->action;
         Order::whereIn('id', $ids)->update(['status' => $action]);
+        foreach($ids as $id){
+            $order = Order::find($id);
+            if($action == Order::SUCCESS && $order->type == 1){
+                event(new OrderShipped($order));
+            }
+        }
         return ['code' => 0];
     }
 

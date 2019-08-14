@@ -1,0 +1,58 @@
+table.table-fields tbody tr td {
+    border: none;
+    padding-right: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+table.table-fields thead tr td,
+table.table-fields thead tr th {
+    padding: 8px 0;
+    margin-bottom: 8px;
+    height: 34px;
+}
+
+.table.table-fields {
+    margin: 0;
+    padding: 0;
+}
+
+table.table-fields .form-group.has-error .control-label,
+table.table-fields .form-group.has-error br,
+div.table-fields .form-group.has-error br {
+    display: none;
+}
+
+.table-has-error .form-group.has-error .control-label {
+    color: inherit;
+}
+
+.control-label.table-error {
+    color: #dd4b39;
+}
+
+.form-group.has-error .select2-container .select2-selection {
+    border-color: #dd4b39;
+    box-shadow: none;
+}
+
+div.table-fields .form-group.has-error div .control-label {
+    display: none;
+}
+
+div.table-fields .form-group .col-sm-12.control-label {
+    margin-bottom: 10px;
+}
+
+div.table.table-fields td .form-group {
+    margin-bottom: 7px
+}
+
+.table.table-fields .col-sm-12 .control-label {
+    text-align: left;
+}
+
+.table.table-fields .show-text {
+    vertical-align: middle;
+}

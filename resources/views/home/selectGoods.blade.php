@@ -3,17 +3,16 @@
 <div class="layui-row">
     <div class="layui-col-md6">
         <div class="layui-card">
-            <div id="test"></div>
             <div class="layui-card-header">购买商品</div>
             <div class="layui-card-body">
-                <form class="layui-form" action="">
+                <form class="layui-form layui-form-pane" action="" lay-filter="goodsForm">
                     <div class="layui-form-item">
                         <label class="layui-form-label">商品分类</label>
                         <div class="layui-input-block">
-                            <select name="category_id" lay-filter="categorySelect" lay-verify="required">
+                            <select id="category-view" name="category_id" lay-filter="categorySelect" lay-verify="required">
                                 <option value="">请选择商品分类</option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option @if(isset($currentGoods) && ($currentGoods->category->id == $category->id)) selected @endif value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -43,8 +42,15 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">购买数量</label>
                         <div class="layui-input-block">
-                            <input type="text" name="count" required lay-verify="required" autocomplete="off"
+                            <input type="number" name="count" required lay-verify="required" autocomplete="off"
                                    class="layui-input" value="1">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邮箱</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="email" placeholder="请仔细输入正确邮箱，用于接收通知" required lay-verify="required|email"
+                                   autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div id="email-and-password">
@@ -55,6 +61,13 @@
                     </div>
                     <div id="more-input">
 
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">支付方式</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="pay_type" value="1" title="微信" checked>
+                            {{--<input type="radio" name="pay_type" value="2" title="支付宝" >--}}
+                        </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
@@ -85,13 +98,6 @@
 </script>
 
 <script id="email-and-password-tpl" type="text/html">
-    <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
-        <div class="layui-input-block">
-            <input type="text" name="email" placeholder="请仔细输入正确邮箱，接收卡密使用" required lay-verify="required|email"
-                   autocomplete="off" class="layui-input">
-        </div>
-    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">查询密码</label>
         <div class="layui-input-block">
@@ -127,31 +133,19 @@
         var laytpl = layui.laytpl;
         var $ = layui.$;
         var layer = layui.layer;
-        form.on('select(categorySelect)', function (data) {
-            var categoryId = data.value;
+        var getGoodsList = function(categoryId,callback=''){
             $.get('/api/goods?q=' + categoryId, function (goodsData) {
                 var getTpl = $('#goods').html();
                 laytpl(getTpl).render(goodsData, function (html) {
                     $('#goods-view').html(html);
                     form.render('select');
+                    if(typeof callback == 'function'){
+                        callback();
+                    }
                 });
             });
-        });
-        form.on('select(goodsSelect)', function (data) {
-            var goodsId = data.value;
-            getGoods(goodsId);
-        });
-        form.on('submit(confirmPay)', function(data){
-            $.post('/api/orders',data.field,function(res){
-                if(res.code === 1){
-                    window.parent.location.href = '/orders/'+res.data.order_id+'/pay';
-                }else{
-                    layer.msg(res.message);
-                }
-            });
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        });
-        var getGoods = function (goodsId) {
+        }
+        var getGoodsDetail = function (goodsId) {
             $.get('/api/goods/' + goodsId, function (res) {
                 $('#price').val(res.price);
                 $('#goods_stock').val(res.goods_stock);
@@ -178,6 +172,32 @@
                 }
             });
         }
+        form.on('select(categorySelect)', function (data) {
+            var categoryId = data.value;
+            getGoodsList(categoryId);
+        });
+        @if(isset($currentGoods))
+        getGoodsList({{$currentGoods->category->id}},function(){
+            $("select[name='goods_id']").val({{$currentGoods->id}});
+            form.render('select');
+        });
+        getGoodsDetail({{$currentGoods->id}});
+        @endif
+        form.on('select(goodsSelect)', function (data) {
+            var goodsId = data.value;
+            getGoodsDetail(goodsId);
+        });
+        form.on('submit(confirmPay)', function(data){
+            $.post('/api/orders',data.field,function(res){
+                if(res.code === 1){
+                    window.parent.location.href = '/orders/'+res.data.order_id;
+                }else{
+                    layer.msg(res.message);
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
     });
 </script>
 @endsection

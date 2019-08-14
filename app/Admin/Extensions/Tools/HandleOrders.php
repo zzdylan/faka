@@ -24,7 +24,7 @@ $('{$this->getElementClass()}').on('click', function() {
         url: '{$this->resource}/status',
         data: {
             _token:LA.token,
-            ids: selectedRows(),
+            ids: $.admin.grid.selected(),
             action: {$this->action}
         },
         success: function () {
