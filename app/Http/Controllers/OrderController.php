@@ -68,6 +68,9 @@ class OrderController extends BaseController
             'attach' => '',                    // 订单附加信息(可选参数)
             'notify_url' => url('api/notify'),     // 异步通知地址(可选参数)
         ];
+        if($order->pay_type == Order::ALIPAY){
+            $data['type'] = 'alipay';
+        }
         if(is_weixin()){
 			$wechatInfo = session('payjs_wechat_info');
 			$data['openid'] = $wechatInfo['openid'];

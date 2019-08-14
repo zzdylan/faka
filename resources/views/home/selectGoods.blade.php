@@ -66,7 +66,7 @@
                         <label class="layui-form-label">支付方式</label>
                         <div class="layui-input-block">
                             <input type="radio" name="pay_type" value="1" title="微信" checked>
-                            {{--<input type="radio" name="pay_type" value="2" title="支付宝" >--}}
+                            <input type="radio" name="pay_type" value="2" title="支付宝" >
                         </div>
                     </div>
                     <div class="layui-form-item">
