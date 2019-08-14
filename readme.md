@@ -103,4 +103,4 @@
 
 
   [1]: http://faka.51godream.com/
-  [2]: http://faka.51godream.com/zzadmin
+  [2]: http://faka.51godream.com/admin
