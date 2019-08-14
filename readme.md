@@ -6,7 +6,8 @@
   
   faka是一个为个人收款而生的发卡系统  
     
-  目前对接了payjs扫码支付和jsapi支付方式,
+  目前对接的payjs支付方式有：  
+  微信和支付宝扫码支付,微信jsapi  
   在电脑上会用扫码支付，在微信中会使用jsapi方式支付  
   从邀请链接进去会有奖励https://payjs.cn/ref/DLXXLD
     
