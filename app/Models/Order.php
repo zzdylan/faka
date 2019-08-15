@@ -13,9 +13,9 @@ class Order extends Model
     const EXPIRE = 2;
     const SUCCESS = 3;
     const ERROR = 4;
-    protected $casts = [
-        'more_input_value' => 'array',
-    ];
+//    protected $casts = [
+//        'more_input_value' => 'array',
+//    ];
     protected $hidden = ['password'];
 
     public function cards(){
