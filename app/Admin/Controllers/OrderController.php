@@ -174,7 +174,7 @@ class OrderController extends Controller
                     $string = $string . "\n";
                 }
             }
-            return $string;
+            return "<textarea>{$string}</textarea>>";
         });;
         $show->created_at('创建时间');
 
