@@ -171,7 +171,7 @@ class OrderController extends Controller
                 if ($key == count($input_arr) - 1) {
                     //$string = $string . '。';
                 } else {
-                    $string = $string . "\r\n";
+                    $string = $string . "\n";
                 }
             }
             return $string;
