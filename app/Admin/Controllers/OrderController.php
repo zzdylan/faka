@@ -163,7 +163,7 @@ class OrderController extends Controller
         $show->trade_no('订单号');
         $show->name('订单名称');
         $show->total_price('订单总价');
-        $show->more_input_value('表单')->as(function ($more_input_value) {
+        $show->more_input_value('表单')->unescape()->as(function ($more_input_value) {
             $string = '';
             $input_arr = json_decode($more_input_value, true);
             foreach ($input_arr as $key => $v) {
@@ -174,7 +174,7 @@ class OrderController extends Controller
                     $string = $string . "\r\n";
                 }
             }
-            return "<span>test</span>";//<textarea>{$string}</textarea>
+            return "<textarea>{$string}</textarea>";
         });
         $show->created_at('创建时间');
 
