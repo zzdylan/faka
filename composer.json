@@ -19,6 +19,7 @@
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^3.1",
         "mews/captcha": "~2.0",
+        "mobiledetect/mobiledetectlib": "^2.8",
         "orangehill/iseed": "^2.6",
         "predis/predis": "^1.1",
         "simplesoftwareio/simple-qrcode": "~2",
