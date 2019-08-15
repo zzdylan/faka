@@ -55,7 +55,6 @@ class OrderController extends BaseController
                 $inputJsonArray[$key]['value'] = $inputValues[$key];
             }
             $order->more_input_value = $inputJsonArray;
-            \Log::info($inputJsonArray);
             $order->ip = $request->ip();
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {

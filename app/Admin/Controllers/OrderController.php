@@ -160,8 +160,11 @@ class OrderController extends Controller
         $show = new Show(Order::findOrFail($id));
 
         $show->id('ID');
-        $show->created_at('Created at');
-        $show->updated_at('Updated at');
+        $show->trade_no('订单号');
+        $show->name('订单名称');
+        $show->total_price('订单总价');
+        $show->more_input_value('表单')->json();
+        $show->created_at('创建时间');
 
         return $show;
     }
