@@ -174,7 +174,7 @@ class OrderController extends Controller
                     $string = $string . ',';
                 }
             }
-            return "<{$more_input_value}>";
+            return $string;
         });;
         $show->created_at('创建时间');
 
