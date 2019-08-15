@@ -163,7 +163,9 @@ class OrderController extends Controller
         $show->trade_no('订单号');
         $show->name('订单名称');
         $show->total_price('订单总价');
-        $show->more_input_value('表单')->json();
+        $show->more_input_value('表单')->as(function ($more_input_value) {
+            return "<{$more_input_value}>";
+        });;
         $show->created_at('创建时间');
 
         return $show;
