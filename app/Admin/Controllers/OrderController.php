@@ -107,7 +107,7 @@ class OrderController extends Controller
         $grid->pay_account('充值账号');
         $grid->email('邮件');
         $grid->type('订单类型')->display(function ($type) {
-            switch ($type){
+            switch ($type) {
                 case 1:
                     return '<span class="label label-primary">手动发卡</span>';
                 case 2:
@@ -125,7 +125,7 @@ class OrderController extends Controller
                     return '';
             }
         });
-        $grid->password('查询密码')->display(function($password){
+        $grid->password('查询密码')->display(function ($password) {
             return $this->password;
         });
         $grid->status('订单状态')->display(function ($status) {
@@ -165,12 +165,12 @@ class OrderController extends Controller
         $show->total_price('订单总价');
         $show->more_input_value('表单')->as(function ($more_input_value) {
             $string = '';
-            $input_arr = json_decode($more_input_value,true);
-            foreach($input_arr as $key=>$v){
-                $string = $v['name'].':'.$v['value'];
-                if($key==count($input_arr)-1){
+            $input_arr = json_decode($more_input_value, true);
+            foreach ($input_arr as $key => $v) {
+                $string = $string . $v['name'] . ':' . $v['value'];
+                if ($key == count($input_arr) - 1) {
                     $string = $string . '。';
-                }else{
+                } else {
                     $string = $string . ',';
                 }
             }
@@ -202,9 +202,9 @@ class OrderController extends Controller
         $ids = $request->ids;
         $action = $request->action;
         Order::whereIn('id', $ids)->update(['status' => $action]);
-        foreach($ids as $id){
+        foreach ($ids as $id) {
             $order = Order::find($id);
-            if($action == Order::SUCCESS && $order->type == 1){
+            if ($action == Order::SUCCESS && $order->type == 1) {
                 event(new OrderShipped($order));
             }
         }
