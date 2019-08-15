@@ -169,9 +169,9 @@ class OrderController extends Controller
             foreach ($input_arr as $key => $v) {
                 $string = $string . $v['name'] . ':' . $v['value'];
                 if ($key == count($input_arr) - 1) {
-                    $string = $string . '。';
+                    //$string = $string . '。';
                 } else {
-                    $string = $string . ',';
+                    $string = $string . "\r\n";
                 }
             }
             return $string;
