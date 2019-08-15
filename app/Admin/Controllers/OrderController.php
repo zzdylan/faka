@@ -176,6 +176,37 @@ class OrderController extends Controller
             }
             return "{$string}";
         });
+        $show->email('邮件');
+        $show->type('订单类型')->as(function($type){
+            if($type == 1){
+                return '手动发卡';
+            }else if($type == 2){
+                return '自动发卡';
+            }
+        });
+        $show->pay_type('支付方式')->as(function($pay_type){
+            if($pay_type == Order::WECHAT){
+                return '微信支付';
+            }else if($pay_type == Order::ALIPAY){
+                return '支付宝支付';
+            }
+        });
+        $show->status('订单状态')->as(function($status){
+            if($status == Order::NO_PAY){
+                return '未支付';
+            }else if($status == Order::PAYED){
+                return '已支付';
+            }else if($status == Order::EXPIRE){
+                return '已过期';
+            }else if($status == Order::SUCCESS){
+                return '处理成功';
+            }else if($status == Order::ERROR){
+                return '处理失败';
+            }
+
+        });
+        $show->payed_time('支付时间');
+        $show->ip('ip');
         $show->created_at('创建时间');
 
         return $show;
