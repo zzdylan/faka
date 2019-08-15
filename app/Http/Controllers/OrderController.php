@@ -96,6 +96,12 @@ class OrderController extends BaseController
             if($payjsData['return_code'] != 1){
                 abort(400,$payjsData['return_msg']);
             }
+
+            $detect = new \Mobile_Detect;
+            if($detect->isMobile() && $order->pay_type == Order::ALIPAY){
+                return view('home.mobilePayment',['order'=>$order,'code_url'=>$payjsData['code_url']]);
+            }
+
             $imageBase64 = base64_encode(QrCode::format('png')->size(200)->generate($payjsData['code_url']));
         }catch (\Exception $e){
             return "<script>alert(\"{$e->getMessage()}\");location.href='/'</script>";

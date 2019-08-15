@@ -97,27 +97,37 @@ function showHideCode(){
 
     window.onload = checkPayStatus();
     @if($order->stauts == 0)
-    $('#footer').click(function(){
-    	WeixinJSBridge.invoke(
-	        'getBrandWCPayRequest', {
-	            // 以下6个支付参数通过payjs的jsapi接口获取
-	            // **************************
-	            "appId": "{{$pay_data['appId']}}",
-	            "timeStamp": "{{$pay_data['timeStamp']}}",
-	            "nonceStr": "{{$pay_data['nonceStr']}}",
-	            "package": "{{$pay_data['package']}}",
-	            "signType": "{{$pay_data['signType']}}",
-	            "paySign": "{{$pay_data['paySign']}}"
-	            // **************************
-	        },
-	        function (res) {
-	            if (res.err_msg == "get_brand_wcpay_request:ok") {
-	                //WeixinJSBridge.call('closeWindow');
-	                alert('支付成功');
-	            }
-	        }
-	    );
-    });
+
+		@if(is_weixin() && $order->pay_type == 1)
+		$('#footer').click(function(){
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest', {
+					// 以下6个支付参数通过payjs的jsapi接口获取
+					// **************************
+					"appId": "{{$pay_data['appId']}}",
+					"timeStamp": "{{$pay_data['timeStamp']}}",
+					"nonceStr": "{{$pay_data['nonceStr']}}",
+					"package": "{{$pay_data['package']}}",
+					"signType": "{{$pay_data['signType']}}",
+					"paySign": "{{$pay_data['paySign']}}"
+					// **************************
+				},
+				function (res) {
+					if (res.err_msg == "get_brand_wcpay_request:ok") {
+						//WeixinJSBridge.call('closeWindow');
+						alert('支付成功');
+					}
+				}
+			);
+		});
+		@endif
+
+		@if($order->pay_type == 2)
+			$('#footer').click(function(){
+				location.href = '{{$code_url}}';
+			});
+		@endif
+
     @endif
 </script>
 
