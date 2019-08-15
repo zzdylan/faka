@@ -43,7 +43,13 @@ class OrderController extends BaseController
             $order->password = $request->password;
             $order->email = $request->email;
             $order->pay_account = $request->pay_account;
-            $order->more_input_value = $request->more_input_value;
+//            $order->goods->first_input;//第一个输入框
+//            $order->goods->more_input;//更多输入框,逗号隔开
+            $firstInput = (array)$order->goods->first_input;
+            $moreInput = explode(',',$order->goods->more_input);
+            $inputKeys = array_merge($firstInput,$moreInput);
+            $inputValues = array_merge((array($order->pay_account)),$request->more_input_value);
+            $order->more_input_value = array_combine($inputKeys,$inputValues);
             $order->ip = $request->ip();
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {
