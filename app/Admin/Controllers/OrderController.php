@@ -93,8 +93,8 @@ class OrderController extends Controller
         });
         $grid->actions(function ($actions) {
             $actions->disableDelete();
-            //$actions->disableEdit();
-            $actions->disableView();
+            $actions->disableEdit();
+            //$actions->disableView();
         });
         $grid->model()->orderBy('id', 'desc');
         $grid->id('订单id');
