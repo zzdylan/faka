@@ -50,6 +50,7 @@ class OrderController extends BaseController
             $inputKeys = array_merge($firstInput,$moreInput);
             $inputValues = array_merge((array($order->pay_account)),$request->more_input_value);
             $order->more_input_value = array_combine($inputKeys,$inputValues);
+            \Log::info($order->more_input_value);
             $order->ip = $request->ip();
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {
