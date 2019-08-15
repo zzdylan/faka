@@ -49,8 +49,13 @@ class OrderController extends BaseController
             $moreInput = explode(',',$order->goods->more_input);
             $inputKeys = array_merge($firstInput,$moreInput);
             $inputValues = array_merge((array($order->pay_account)),$request->more_input_value);
-            $order->more_input_value = array_combine($inputKeys,$inputValues);
-            \Log::info($order->more_input_value);
+            $inputJsonArray = [];
+            foreach($inputKeys as $key=>$inputKey){
+                $inputJsonArray[$key]['name'] = $inputKeys[$key];
+                $inputJsonArray[$key]['value'] = $inputValues[$key];
+            }
+            $order->more_input_value = $inputJsonArray;
+            \Log::info($inputJsonArray);
             $order->ip = $request->ip();
             $order->save();
             if ($goods->type == 1 && $goods->decreaseStock($order->count) <= 0) {
