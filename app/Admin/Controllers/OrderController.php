@@ -164,6 +164,16 @@ class OrderController extends Controller
         $show->name('订单名称');
         $show->total_price('订单总价');
         $show->more_input_value('表单')->as(function ($more_input_value) {
+            $string = '';
+            $input_arr = json_decode($more_input_value,true);
+            foreach($input_arr as $key=>$v){
+                $string = $v['name'].':'.$v['value'];
+                if($key==count($input_arr)-1){
+                    $string = $string . '。';
+                }else{
+                    $string = $string . ',';
+                }
+            }
             return "<{$more_input_value}>";
         });;
         $show->created_at('创建时间');
