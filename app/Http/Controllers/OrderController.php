@@ -48,7 +48,7 @@ class OrderController extends BaseController
             $firstInput = (array)$order->goods->first_input;
             $moreInput = explode(',',$order->goods->more_input);
             $inputKeys = array_merge($firstInput,$moreInput);
-            $inputValues = array_merge((array($order->pay_account)),$request->more_input_value);
+            $inputValues = array_merge((array($order->pay_account)),(array)$request->more_input_value);
             $inputJsonArray = [];
             foreach($inputKeys as $key=>$inputKey){
                 $inputJsonArray[$key]['name'] = $inputKeys[$key];
@@ -100,9 +100,14 @@ class OrderController extends BaseController
             $detect = new \Mobile_Detect;
             if($detect->isMobile() && $order->pay_type == Order::ALIPAY){
                 return view('home.mobilePayment',['order'=>$order,'code_url'=>$payjsData['code_url']]);
+                //return view('home.mobilePayment',['order'=>$order,'code_url'=>url('orders/'.$id)]);
             }
-
-            $imageBase64 = base64_encode(QrCode::format('png')->size(200)->generate($payjsData['code_url']));
+			if($detect->isMobile()){
+				$codeUrl = url('orders/'.$id);
+			}else{
+				$codeUrl = $payjsData['code_url'];
+			}
+            $imageBase64 = base64_encode(QrCode::format('png')->size(200)->generate($codeUrl));
         }catch (\Exception $e){
             return "<script>alert(\"{$e->getMessage()}\");location.href='/'</script>";
         }
